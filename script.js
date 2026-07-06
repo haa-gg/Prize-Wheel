@@ -169,6 +169,15 @@ spinBtn.addEventListener('click', () => {
     }, SPIN_DURATION + 200);
 });
 
+// Spacebar trigger
+document.addEventListener('keydown', (e) => {
+    // Only trigger if spacebar is pressed, wheel isn't spinning, and config modal is hidden
+    if (e.code === 'Space' && !isSpinning && !spinBtn.disabled && configModal.classList.contains('hidden')) {
+        e.preventDefault(); // Prevent page scroll
+        spinBtn.click();
+    }
+});
+
 function showWinner(prize) {
     winnerText.textContent = prize.name;
     winnerModal.classList.remove('hidden');

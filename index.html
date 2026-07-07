@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <!-- Local Fonts -->
     <link rel="stylesheet" href="font.css">
 </head>
+
 <body>
     <div class="app-container">
         <button id="btn-edit-config" class="icon-btn floating-config-btn" title="Edit Prizes">⚙️</button>
@@ -16,7 +18,7 @@
             <div class="wheel-container">
                 <div class="pointer"></div>
                 <canvas id="wheel-canvas" width="700" height="700"></canvas>
-                <button id="btn-spin" class="spin-btn">SPIN<br>TO<br>WIN</button>
+                <button id="btn-spin" class="spin-btn">Push<br>the<br>Button</button>
             </div>
         </main>
     </div>
@@ -35,13 +37,13 @@
         <div class="modal-content glass config-content">
             <h2>Prize Configuration</h2>
             <p>Set prize names, relative weights, and colors. Higher weight = larger wedge.</p>
-            
+
             <div id="prize-list">
                 <!-- Dynamically populated prize rows go here -->
             </div>
-            
+
             <button id="btn-add-prize" class="secondary-btn">+ Add Prize</button>
-            
+
             <div class="modal-actions">
                 <button id="btn-config-cancel" class="text-btn">Cancel</button>
                 <button id="btn-config-save" class="primary-btn">Save & Apply</button>
@@ -56,4 +58,5 @@
     <script src="confetti.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -171,10 +171,18 @@ spinBtn.addEventListener('click', () => {
 
 // Spacebar trigger
 document.addEventListener('keydown', (e) => {
-    // Only trigger if spacebar is pressed, wheel isn't spinning, and config modal is hidden
-    if (e.code === 'Space' && !isSpinning && !spinBtn.disabled && configModal.classList.contains('hidden')) {
-        e.preventDefault(); // Prevent page scroll
-        spinBtn.click();
+    if (e.code === 'Space') {
+        // If winner modal is open, close it
+        if (!winnerModal.classList.contains('hidden')) {
+            e.preventDefault();
+            resetBtn.click();
+            return;
+        }
+        // Only trigger spin if wheel isn't spinning and config modal is hidden
+        if (!isSpinning && !spinBtn.disabled && configModal.classList.contains('hidden')) {
+            e.preventDefault(); // Prevent page scroll
+            spinBtn.click();
+        }
     }
 });
 

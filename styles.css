@@ -4,7 +4,7 @@
     --brand-vivid: #008dff;
     --brand-50-blue: #7794B9;
     --brand-40-blue: #A4B8D1;
-    
+
     --text-main: #E8EDF3;
     --text-muted: #A4B8D1;
     --glass-bg: rgba(28, 77, 139, 0.5);
@@ -20,7 +20,7 @@
 body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--brand-navy);
-    background-image: 
+    background-image:
         radial-gradient(circle at top, var(--brand-blue), var(--brand-navy) 80%),
         url("felt.png");
     background-blend-mode: multiply, normal;
@@ -59,6 +59,11 @@ header {
     right: 2rem;
     z-index: 50;
     background: var(--glass-bg);
+    opacity: 0.2;
+}
+
+.floating-config-btn:hover {
+    opacity: 1;
 }
 
 .icon-btn {
@@ -129,20 +134,19 @@ header {
     text-align: center;
     font-size: 1.4rem;
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 2px;
     line-height: 1.2;
     color: white;
-    background: linear-gradient(135deg, var(--brand-vivid), var(--brand-blue));
-    border: 6px solid var(--brand-navy);
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    border: 6px solid #800000;
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(0, 141, 255, 0.6);
+    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .spin-btn:hover {
     transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 141, 255, 0.8);
+    box-shadow: 0 15px 35px rgba(255, 0, 0, 0.8);
 }
 
 .spin-btn:active {
@@ -153,7 +157,8 @@ header {
     background: #475569;
     box-shadow: none;
     cursor: not-allowed;
-    transform: translate(-50%, -50%); /* Preserve centering */
+    transform: translate(-50%, -50%);
+    /* Preserve centering */
     border-color: #334155;
 }
 

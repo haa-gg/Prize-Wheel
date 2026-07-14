@@ -1,4 +1,5 @@
 let prizes = [];
+let globalFontSize = 20;
 let currentRotation = 0;
 let isSpinning = false;
 
@@ -24,6 +25,14 @@ const SPINS = 8; // Number of full rotations before stopping
 async function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const configParam = urlParams.get('config');
+    const fontParam = urlParams.get('fontSize');
+    
+    if (fontParam) {
+        globalFontSize = parseInt(fontParam, 10) || 20;
+    } else {
+        const savedFontSize = localStorage.getItem('prizeWheelFontSize');
+        if (savedFontSize) globalFontSize = parseInt(savedFontSize, 10) || 20;
+    }
     
     if (configParam) {
         try {
@@ -89,7 +98,7 @@ function drawWheel() {
         
         ctx.textAlign = 'right';
         ctx.fillStyle = prize.textColor || '#ffffff';
-        ctx.font = 'bold 20px Outfit, sans-serif';
+        ctx.font = 'bold ' + globalFontSize + 'px Outfit, sans-serif';
         // Add shadow for better readability
         ctx.shadowColor = 'rgba(0,0,0,0.5)';
         ctx.shadowBlur = 4;
@@ -98,7 +107,7 @@ function drawWheel() {
         let text = prize.name;
         if(text.length > 15) text = text.substring(0, 15) + '...';
         
-        ctx.fillText(text, radius - 20, 6);
+        ctx.fillText(text, radius - 20, 10);
         ctx.restore();
         
         prize.startAngle = startAngle;
@@ -208,6 +217,7 @@ resetBtn.addEventListener('click', () => {
 // --- CONFIG EDITOR LOGIC ---
 
 editBtn.addEventListener('click', () => {
+    document.getElementById('global-font-size').value = globalFontSize;
     renderConfigList();
     configModal.classList.remove('hidden');
 });
@@ -275,12 +285,15 @@ saveConfigBtn.addEventListener('click', () => {
     
     if(newPrizes.length > 0) {
         prizes = newPrizes;
+        globalFontSize = parseInt(document.getElementById('global-font-size').value, 10) || 20;
+        
         localStorage.setItem('prizeWheelConfig', JSON.stringify(prizes));
+        localStorage.setItem('prizeWheelFontSize', globalFontSize.toString());
         
         // Update URL to make it shareable via GitHub Pages!
         try {
             const encodedConfig = btoa(encodeURIComponent(JSON.stringify(prizes)));
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?config=' + encodedConfig;
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?config=' + encodedConfig + '&fontSize=' + globalFontSize;
             window.history.replaceState({path:newUrl}, '', newUrl);
         } catch (e) {
             console.error("Failed to update URL", e);

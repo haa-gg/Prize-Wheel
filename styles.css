@@ -88,8 +88,9 @@ header {
 /* Wheel Container */
 .wheel-container {
     position: relative;
-    width: 700px;
-    height: 700px;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 1 / 1;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 }
 
@@ -124,8 +125,10 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
+    width: 20%;
+    height: 20%;
+    min-width: 100px;
+    min-height: 100px;
     border-radius: 50%;
     z-index: 20;
     display: flex;
@@ -384,4 +387,50 @@ header {
 
 .credits a:hover {
     color: var(--brand-vivid);
+}
+
+/* Portrait Mode Elements */
+.portrait-only {
+    display: none;
+}
+
+@media (orientation: portrait) {
+    .portrait-only {
+        display: block;
+        text-align: center;
+    }
+
+    .portrait-title {
+        font-family: 'Krona One', 'Outfit', sans-serif;
+        font-size: clamp(1.5rem, 6vw, 3rem);
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-main);
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .portrait-footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .portrait-footer {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(1rem, 4vw, 1.5rem);
+        font-weight: 400;
+        color: var(--brand-40-blue);
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .portrait-logo {
+        height: clamp(30px, 10vw, 60px);
+        object-fit: contain;
+    }
 }

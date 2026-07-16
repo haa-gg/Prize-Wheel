@@ -1,11 +1,16 @@
 let prizes = [];
 let globalFontSize = 20;
+let buttonFontSize = 22;
+let headerFontSize = 48;
+let footerFontSize = 24;
 let currentRotation = 0;
 let isSpinning = false;
 
 const canvas = document.getElementById('wheel-canvas');
 const ctx = canvas.getContext('2d');
 const spinBtn = document.getElementById('btn-spin');
+const headerEl = document.querySelector('.portrait-title');
+const footerEl = document.querySelector('.portrait-footer');
 const winnerModal = document.getElementById('winner-modal');
 const winnerText = document.getElementById('winner-prize-text');
 const resetBtn = document.getElementById('btn-reset');
@@ -34,6 +39,30 @@ async function init() {
         if (savedFontSize) globalFontSize = parseInt(savedFontSize, 10) || 20;
     }
     
+    const buttonFontParam = urlParams.get('btnFontSize');
+    if (buttonFontParam) {
+        buttonFontSize = parseInt(buttonFontParam, 10) || 22;
+    } else {
+        const savedBtnFontSize = localStorage.getItem('prizeWheelButtonFontSize');
+        if (savedBtnFontSize) buttonFontSize = parseInt(savedBtnFontSize, 10) || 22;
+    }
+
+    const headerFontParam = urlParams.get('hdrFontSize');
+    if (headerFontParam) {
+        headerFontSize = parseInt(headerFontParam, 10) || 48;
+    } else {
+        const savedHdrFontSize = localStorage.getItem('prizeWheelHeaderFontSize');
+        if (savedHdrFontSize) headerFontSize = parseInt(savedHdrFontSize, 10) || 48;
+    }
+
+    const footerFontParam = urlParams.get('ftrFontSize');
+    if (footerFontParam) {
+        footerFontSize = parseInt(footerFontParam, 10) || 24;
+    } else {
+        const savedFtrFontSize = localStorage.getItem('prizeWheelFooterFontSize');
+        if (savedFtrFontSize) footerFontSize = parseInt(savedFtrFontSize, 10) || 24;
+    }
+    
     if (configParam) {
         try {
             // Decode the base64 URL parameter (safely handling Unicode/emojis)
@@ -59,6 +88,9 @@ async function init() {
         }
     }
     
+    spinBtn.style.fontSize = buttonFontSize + 'px';
+    if (headerEl) headerEl.style.fontSize = headerFontSize + 'px';
+    if (footerEl) footerEl.style.fontSize = footerFontSize + 'px';
     drawWheel();
 }
 
@@ -218,6 +250,9 @@ resetBtn.addEventListener('click', () => {
 
 editBtn.addEventListener('click', () => {
     document.getElementById('global-font-size').value = globalFontSize;
+    document.getElementById('button-font-size').value = buttonFontSize;
+    document.getElementById('header-font-size').value = headerFontSize;
+    document.getElementById('footer-font-size').value = footerFontSize;
     renderConfigList();
     configModal.classList.remove('hidden');
 });
@@ -286,14 +321,24 @@ saveConfigBtn.addEventListener('click', () => {
     if(newPrizes.length > 0) {
         prizes = newPrizes;
         globalFontSize = parseInt(document.getElementById('global-font-size').value, 10) || 20;
+        buttonFontSize = parseInt(document.getElementById('button-font-size').value, 10) || 22;
+        headerFontSize = parseInt(document.getElementById('header-font-size').value, 10) || 48;
+        footerFontSize = parseInt(document.getElementById('footer-font-size').value, 10) || 24;
         
         localStorage.setItem('prizeWheelConfig', JSON.stringify(prizes));
         localStorage.setItem('prizeWheelFontSize', globalFontSize.toString());
+        localStorage.setItem('prizeWheelButtonFontSize', buttonFontSize.toString());
+        localStorage.setItem('prizeWheelHeaderFontSize', headerFontSize.toString());
+        localStorage.setItem('prizeWheelFooterFontSize', footerFontSize.toString());
+        
+        spinBtn.style.fontSize = buttonFontSize + 'px';
+        if (headerEl) headerEl.style.fontSize = headerFontSize + 'px';
+        if (footerEl) footerEl.style.fontSize = footerFontSize + 'px';
         
         // Update URL to make it shareable via GitHub Pages!
         try {
             const encodedConfig = btoa(encodeURIComponent(JSON.stringify(prizes)));
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?config=' + encodedConfig + '&fontSize=' + globalFontSize;
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?config=' + encodedConfig + '&fontSize=' + globalFontSize + '&btnFontSize=' + buttonFontSize + '&hdrFontSize=' + headerFontSize + '&ftrFontSize=' + footerFontSize;
             window.history.replaceState({path:newUrl}, '', newUrl);
         } catch (e) {
             console.error("Failed to update URL", e);
